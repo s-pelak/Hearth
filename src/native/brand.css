@@ -1,0 +1,23 @@
+/* Brand colors, and only colors. PROVISIONAL: these are the whitepaper palette
+   from docs/UI.md, kept here in one place so the brand style guide can replace
+   them without touching layout or platform styles (platform.css). */
+:root {
+  color-scheme: light dark;
+
+  /* Accents */
+  --brand-accent: light-dark(#12727d, #46b3be);      /* teal: working, primary */
+  --brand-on-accent: light-dark(#ffffff, #0e161c);
+  --brand-attention: light-dark(#9a5b1c, #e0a866);   /* copper: needs you */
+  --brand-danger: light-dark(#b94a3e, #e07a6d);      /* brick: failed, costs money */
+  --brand-quiet: light-dark(#204254, #7fa6bb);       /* slate: labels, review */
+
+  /* Grounds and text */
+  --brand-window: light-dark(#ffffff, #111a21);
+  --brand-sidebar: light-dark(#f2f0ed, #0e161c);
+  --brand-raised: light-dark(#e6e3df, #1b2a35);
+  --brand-line: light-dark(#e3e1dd, #243846);
+  --brand-text: light-dark(#121b22, #e3e1dd);
+  --brand-text-dim: light-dark(#5a5f65, #9aa1a7);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }

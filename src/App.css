@@ -1,25 +1,10 @@
-/* Tokens from docs/UI.md. System font per Apple's HIG; palette from the whitepaper guide. */
-:root {
-  color-scheme: light dark;
-  --bg: light-dark(#ffffff, #111a21);
-  --sidebar: light-dark(#f2f0ed, #0e161c);
-  --line: light-dark(#e3e1dd, #243846);
-  --text: light-dark(#121b22, #e3e1dd);
-  --dim: light-dark(#5a5f65, #9aa1a7);
-  --teal: #12727d;
-  --copper: #c9853b;
-  --brick: #b94a3e;
-  --slate: #204254;
-  font: 14px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", sans-serif;
-}
-* { box-sizing: border-box; }
-html, body, #root { height: 100%; margin: 0; }
-body { background: var(--bg); color: var(--text); }
-.shell { display: grid; grid-template-columns: 220px 1fr; height: 100%; }
-.sidebar { background: var(--sidebar); border-right: 1px solid var(--line); padding: 44px 14px 14px; }
-.sidebar h1 { font-size: 15px; font-weight: 500; margin: 0; }
-.content { padding: 44px 24px; }
-.content h2 { font-size: 17px; font-weight: 500; margin: 0 0 12px; }
-ul { list-style: none; padding: 0; margin: 0; }
-li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--line); }
-small { color: var(--dim); }
+/* Placeholder layout only. Colors come from native/brand.css, platform
+   metrics from native/platform.css. */
+.sidebar .spacer { flex: 1; }
+.window[data-sidebar="rail"] .sidebar .label { display: none; }
+.content { display: flex; flex-direction: column; min-height: 0; }
+.page { padding: 0 16px 16px; overflow: auto; }
+:root[data-platform="macos"] .titlebar { padding-left: 20px; }
+.list { list-style: none; padding: 0; margin: 0; }
+.list li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid var(--brand-line); }
+.settings-window { height: 100%; padding: 20px; background: var(--brand-window); }

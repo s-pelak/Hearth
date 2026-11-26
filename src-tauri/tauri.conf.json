@@ -16,16 +16,18 @@
         "title": "Hearth",
         "width": 1200,
         "height": 780,
-        "minWidth": 720,
+        "minWidth": 760,
         "minHeight": 480,
         "titleBarStyle": "Overlay",
         "hiddenTitle": true,
-        "visible": true
+        "visible": true,
+        "transparent": true
       }
     ],
     "security": {
       "csp": "default-src 'self'; connect-src 'self' ipc: http://ipc.localhost; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
-    }
+    },
+    "macOSPrivateApi": true
   },
   "bundle": {
     "active": true,

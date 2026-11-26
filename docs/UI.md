@@ -10,7 +10,17 @@ The goal: an interface very close to Claude's own projects experience, in Stefan
 4. **Everything collapses:** the sidebar (down to an icon rail), the Chats and Projects groups, each project, the thread list, groups of tool calls, and the artifacts pane. Remember collapse state per window.
 5. **Quiet by default:** settings and rarely used controls live in the lower-left Settings menu, not in the thread view.
 
-## Palette (from Stefan's whitepaper style guide)
+## Native shell (implemented)
+
+Color-independent platform work lives in `src-tauri/src/native.rs` and `src/native/`:
+
+- **Materials:** the main window is transparent; macOS gets `NSVisualEffectView` sidebar vibrancy, Windows 11 gets Mica. The UI reads which one applied (`window_chrome`) and sets `data-material` on `<html>`, so Windows 10 and Linux stay opaque.
+- **macOS menu bar:** Hearth, File, Edit, View, Thread, Window, Help with standard ⌘ shortcuts (⌘, Settings, ⌘N New Thread, ⌘K Search, ⌃⌘S Toggle Sidebar, ⌘1 Overview). Custom items reach the UI as `menu` events.
+- **Dock presence:** Hearth is a regular app (Dock icon and menu bar) while a window is open, and drops back to menu bar only when every window is closed.
+- **Settings:** its own window on macOS (⌘,); a page inside the main window on Windows, as Fluent apps do. Windows binds the same commands to Ctrl shortcuts in `platform.ts`.
+- **Styles:** `platform.css` holds type ramps, control metrics, selection, focus and switch styles per platform (HIG on macOS, Fluent 2 on Windows). `brand.css` holds colors only; the values below are provisional until the brand style guide lands, and replacing that file should be all a rebrand needs.
+
+## Palette (from Stefan's whitepaper style guide, provisional)
 
 Accents keep their whitepaper meaning so a glance at a thread list says what needs attention.
 
