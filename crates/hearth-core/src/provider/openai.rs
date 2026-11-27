@@ -87,6 +87,20 @@ impl Provider for OpenAiProvider {
             "stream_options": {"include_usage": true},
             "max_tokens": req.max_tokens,
         });
+        if let Some(on) = req.settings.thinking {
+            body["chat_template_kwargs"] = json!({"enable_thinking": on});
+        }
+        if let Some(s) = &req.settings.sampling {
+            if let Some(t) = s.temperature {
+                body["temperature"] = json!(t);
+            }
+            if let Some(p) = s.top_p {
+                body["top_p"] = json!(p);
+            }
+            if let Some(r) = s.repeat_penalty {
+                body["repeat_penalty"] = json!(r);
+            }
+        }
         if !req.tools.is_empty() {
             body["tools"] = req
                 .tools

@@ -93,6 +93,7 @@ impl Provider for AnthropicProvider {
     }
 
     async fn complete(&self, req: &ChatRequest, on_delta: DeltaSink<'_>) -> Result<Completion, ProviderError> {
+        // `req.settings` is for local models only; Anthropic rejects `temperature`, so it is never sent.
         let (system, messages) = to_wire(&req.messages);
         let mut body = json!({"model": req.model, "max_tokens": req.max_tokens, "messages": messages});
         if !system.is_empty() {

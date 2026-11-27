@@ -22,4 +22,5 @@ Read docs/PLAN.md (what and why, phases) and docs/UI.md (design requirements) be
 
 ## Context
 - The LLM box is a headless machine serving OpenAI-compatible endpoints (llama.cpp / LM Studio), reached over Tailscale. Its default provider id is `hearth-box`; the URL is a placeholder until the tailnet name is known.
+- The box keeps three models: `gemma-4-12b` (everyday text), `qwen3.6-35b-a3b` (code and CAD) and `nemotron-3.5-bolt-74b` (agents, long documents; the default for threads and the coordinator). Their roles and tuned settings live in `crates/hearth-core/src/models.rs`; don't add defaults that point at other local models.
 - Stefan's benchmarks showed small local models often fail agentic tasks through malformed tool calls, repeated calls and tool errors. That is why stall detection, decision cards, context summarization and optional escalation are core features.

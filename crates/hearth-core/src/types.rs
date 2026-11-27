@@ -18,7 +18,7 @@ pub enum Message {
         content: String,
         #[serde(default, skip_serializing_if = "Vec::is_empty")]
         tool_calls: Vec<ToolCall>,
-        /// Which model wrote this turn, e.g. `hearth-box/qwen3.5-9b`.
+        /// Which model wrote this turn, e.g. `hearth-box/nemotron-3.5-bolt-74b`.
         #[serde(default, skip_serializing_if = "Option::is_none")]
         model: Option<String>,
         /// Provider-native content (e.g. Anthropic content blocks with thinking),
@@ -80,7 +80,7 @@ pub struct ToolSpec {
     pub parameters: Value,
 }
 
-/// A model on a configured provider, e.g. `{provider: "hearth-box", model: "qwen3.5-9b"}`.
+/// A model on a configured provider, e.g. `{provider: "hearth-box", model: "nemotron-3.5-bolt-74b"}`.
 #[derive(Clone, Debug, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct ModelRef {
     pub provider: String,
@@ -108,6 +108,24 @@ pub struct ChatRequest {
     pub messages: Vec<Message>,
     pub tools: Vec<ToolSpec>,
     pub max_tokens: u32,
+    /// Per-model settings for local models (see `models::settings_for`). Empty for cloud models.
+    pub settings: ModelSettings,
+}
+
+/// Request settings a local model was tuned with. `None` leaves the server's default.
+#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
+pub struct ModelSettings {
+    /// Reasoning on or off, sent to llama.cpp as `chat_template_kwargs.enable_thinking`.
+    pub thinking: Option<bool>,
+    pub sampling: Option<Sampling>,
+}
+
+#[derive(Clone, Debug, Default, Serialize, Deserialize, PartialEq)]
+pub struct Sampling {
+    pub temperature: Option<f32>,
+    pub top_p: Option<f32>,
+    /// llama.cpp's `repeat_penalty`.
+    pub repeat_penalty: Option<f32>,
 }
 
 /// The finished assistant turn from one provider call.
