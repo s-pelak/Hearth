@@ -1,189 +1,146 @@
-/* Platform structure: type, metrics, materials, focus. No hues live here;
-   every color comes from brand.css so the two can change independently.
-   macOS follows Apple's Human Interface Guidelines, Windows follows Fluent 2
-   (WinUI 3). Selected by data-platform / data-material on <html>. */
+/* Platform structure: system type, metrics, materials, focus and control
+   shapes. Colors come only from brand.css / hearth-tokens.css.
+   macOS follows Apple's Human Interface Guidelines, Windows follows Fluent 2.
+   Selected by data-platform / data-material on <html>. */
 
 /* ---------- macOS (HIG) ---------- */
 :root,
 :root[data-platform="macos"] {
   --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Type: macOS body is 13 pt, headline 13 semibold, title 3 is 15, title 2 is 17. */
+  /* HIG text styles: body 13, callout 12, footnote 10–11, headline 13 semibold. */
   --text-caption: 11px;
   --text-small: 12px;
   --text-body: 13px;
-  --text-title: 17px;
-  --text-large-title: 22px;
-  --weight-title: 600;
+  --text-reading: 15px;        /* messages and answers, read at length */
   --leading: 1.38;
+  --leading-reading: 1.6;
 
-  /* Metrics */
-  --titlebar-h: 52px;          /* unified title bar + toolbar */
-  --traffic-lights-w: 78px;    /* keep toolbar items clear of the window buttons */
-  --sidebar-w: 220px;
+  --titlebar-h: 52px;          /* unified title bar and toolbar */
+  --traffic-lights-w: 78px;
+  --sidebar-w: 240px;
   --rail-w: 56px;
-  --row-h: 28px;               /* medium sidebar row */
+  --list-w: 280px;
+  --pane-w: 360px;             /* artifacts: the design system's side panel */
+  --row-h: 28px;
   --row-radius: 6px;
-  --control-h: 24px;           /* regular push button */
-  --control-radius: 6px;
-  --card-radius: 10px;
-  --space: 8px;
-
-  /* The user's system accent drives focus rings, per the HIG. */
-  --focus-color: AccentColor;
-  --focus: 0 0 0 3px color-mix(in srgb, var(--focus-color, var(--brand-accent)) 50%, transparent);
-
-  /* Sidebar selection: accent when the window is key, grey when it is not. */
-  --selection-bg: var(--brand-accent);
-  --selection-fg: var(--brand-on-accent);
-  --selection-inactive-bg: color-mix(in srgb, var(--brand-text) 12%, transparent);
+  --control-h: 28px;           /* large push button; the brand's pill shape */
+  --icon: 16px;
 }
 
 /* ---------- Windows (Fluent 2) ---------- */
 :root[data-platform="windows"] {
   --font: "Segoe UI Variable Text", "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
-  --font-display: "Segoe UI Variable Display", "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
   --font-mono: "Cascadia Mono", Consolas, monospace;
 
-  /* Fluent type ramp: caption 12/16, body 14/20, subtitle 20/28, title 28/36. */
+  /* Fluent type ramp: caption 12/16, body 14/20. */
   --text-caption: 12px;
   --text-small: 12px;
   --text-body: 14px;
-  --text-title: 20px;
-  --text-large-title: 28px;
-  --weight-title: 600;
+  --text-reading: 15px;
   --leading: 1.43;
+  --leading-reading: 1.6;
 
-  --titlebar-h: 48px;
+  --titlebar-h: 0px;           /* the native title bar stays; Mica runs under it */
   --traffic-lights-w: 0px;
   --sidebar-w: 280px;          /* NavigationView open pane */
   --rail-w: 48px;              /* NavigationView compact pane */
-  --row-h: 36px;               /* nav item */
+  --list-w: 300px;
+  --pane-w: 360px;
+  --row-h: 36px;
   --row-radius: 4px;
   --control-h: 32px;
-  --control-radius: 4px;
-  --card-radius: 8px;          /* layers and cards */
-  --space: 8px;
-
-  /* Fluent focus visual: 2 px outer stroke in text color, 1 px inner in window color. */
-  --focus: 0 0 0 1px var(--brand-window), 0 0 0 3px var(--brand-text);
-
-  /* Nav selection is a subtle fill plus a 3 px accent pill, not a solid fill. */
-  --selection-bg: color-mix(in srgb, var(--brand-text) 6%, transparent);
-  --selection-fg: var(--brand-text);
-  --selection-inactive-bg: var(--selection-bg);
+  --icon: 16px;
 }
 
-/* ---------- Linux: opaque, system font, Fluent-like metrics ---------- */
 :root[data-platform="linux"] {
   --font: system-ui, "Cantarell", "Ubuntu", sans-serif;
-  --font-display: var(--font);
   --titlebar-h: 0px;
   --traffic-lights-w: 0px;
 }
 
 /* ---------- Base ---------- */
-* { box-sizing: border-box; }
+* { box-sizing: border-box; min-width: 0; }
 html, body, #root { height: 100%; margin: 0; }
 body {
   font: var(--text-body) / var(--leading) var(--font);
-  color: var(--brand-text);
-  background: var(--brand-window);
+  color: var(--hearth-text);
+  background: var(--app-ground);
   -webkit-font-smoothing: antialiased;
-  -webkit-user-select: none;   /* app chrome is not selectable text */
+  -webkit-user-select: none;
   user-select: none;
-  cursor: default;             /* native apps use the arrow, not the hand, on controls */
+  cursor: default;
+  overflow: hidden;
 }
 .selectable, textarea, input, [contenteditable] { -webkit-user-select: text; user-select: text; }
+button { font: inherit; color: inherit; cursor: default; }
+/* Brand focus: 2 px ring, 2 px from the control, on every interactive element. */
 :focus { outline: none; }
-:focus-visible { box-shadow: var(--focus); border-radius: var(--control-radius); }
+:focus-visible { outline: 2px solid var(--hearth-focus); outline-offset: 2px; }
 
-/* With a material behind the window, the page itself goes clear and each
-   surface decides how opaque to be. Without one, everything stays opaque. */
 :root[data-material="sidebar"] body,
 :root[data-material="mica"] body { background: transparent; }
 
-/* ---------- Window frame ---------- */
-.window { display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr); height: 100%; }
-.window[data-sidebar="rail"] { grid-template-columns: var(--rail-w) minmax(0, 1fr); }
-.window[data-sidebar="hidden"] { grid-template-columns: 0 minmax(0, 1fr); }
+/* ---------- Title text ---------- */
+.title-m { font: 500 22px / 28px var(--font-brand-display); font-variation-settings: "SOFT" 50; margin: 0; }
+.title-l { font: 500 28px / 34px var(--font-brand-display); font-variation-settings: "SOFT" 50; margin: 0; }
+.muted { color: var(--hearth-muted); }
+.caption { font-size: var(--text-caption); color: var(--hearth-muted); }
+.small { font-size: var(--text-small); }
 
-.sidebar {
-  display: flex; flex-direction: column; min-height: 0; overflow: hidden;
-  padding: var(--titlebar-h) var(--space) var(--space);
-  background: var(--brand-sidebar);
+/* ---------- Buttons: pills, four types (design system ch. 03) ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: var(--control-h); padding: 0 14px; border-radius: var(--hearth-radius-pill);
+  font-weight: 500; white-space: nowrap; border: 1px solid transparent; background: none;
+  transition: background var(--hearth-duration-instant) var(--hearth-ease-standard);
 }
-.titlebar { height: var(--titlebar-h); display: flex; align-items: center; gap: var(--space); padding: 0 16px; }
+.btn:disabled { opacity: var(--hearth-state-disabled); }
+.btn.primary { background: var(--hearth-flame); color: var(--hearth-on-flame); }
+.btn.primary:hover { background: var(--hearth-flame-hover); }
+.btn.primary:active { background: var(--hearth-flame-pressed); }
+.btn.secondary { background: var(--app-surface); border-color: var(--hearth-structure); color: var(--hearth-structure); }
+.btn.secondary:hover { background: var(--hearth-surface-hover); }
+.btn.secondary:active { background: var(--hearth-surface-pressed); }
+.btn.quiet { color: var(--hearth-structure); padding: 0 10px; }
+.btn.quiet:hover { background: var(--app-hover); }
+.btn.quiet:active { background: var(--app-pressed); }
+.btn.danger { background: var(--hearth-risk); color: var(--hearth-surface); }
+.btn.danger:hover { background: var(--hearth-risk-hover); }
+.btn.small { height: calc(var(--control-h) - 4px); padding: 0 11px; font-size: var(--text-small); }
 
-/* macOS: the sidebar is the vibrancy material itself, tinted slightly; the
-   content column is opaque and separated by a hairline. */
-:root[data-platform="macos"][data-material="sidebar"] .sidebar {
-  background: color-mix(in srgb, var(--brand-sidebar) 40%, transparent);
+/* Icon-only toolbar button (labelled for screen readers). */
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border: 0; border-radius: var(--row-radius); background: none;
+  color: var(--hearth-structure); flex: none;
 }
-:root[data-platform="macos"] .content { background: var(--brand-window); border-left: 1px solid var(--brand-line); }
-:root[data-platform="macos"] .sidebar { padding-top: var(--titlebar-h); }
+.icon-btn:hover { background: var(--app-hover); }
+.icon-btn:active { background: var(--app-pressed); }
+.icon-btn[aria-pressed="true"] { background: var(--app-selected); }
+:root[data-platform="windows"] .icon-btn { width: 36px; height: 32px; }
 
-/* Windows: the nav pane sits on Mica; content is a raised layer with a
-   rounded top-left corner and a hairline stroke, as in WinUI 3 apps. */
-:root[data-platform="windows"][data-material="mica"] .sidebar { background: transparent; }
-:root[data-platform="windows"] .sidebar { padding-top: var(--space); }
-:root[data-platform="windows"] .content {
-  background: color-mix(in srgb, var(--brand-window) 70%, transparent);
-  border: 1px solid var(--brand-line);
-  border-width: 1px 0 0 1px;
-  border-top-left-radius: var(--card-radius);
-}
-:root[data-platform="windows"]:not([data-material="mica"]) .content { background: var(--brand-window); }
-
-/* ---------- Sidebar rows ---------- */
-.row {
-  display: flex; align-items: center; gap: 8px; width: 100%;
-  min-height: var(--row-h); padding: 0 10px; border: 0; border-radius: var(--row-radius);
-  background: none; color: inherit; font: inherit; text-align: left; position: relative;
-}
-.row[aria-current="page"] { background: var(--selection-bg); color: var(--selection-fg); }
-:root[data-platform="macos"][data-active="false"] .row[aria-current="page"] {
-  background: var(--selection-inactive-bg); color: var(--brand-text);
-}
-:root[data-platform="windows"] .row:hover { background: color-mix(in srgb, var(--brand-text) 4%, transparent); }
-:root[data-platform="windows"] .row[aria-current="page"]::before {
-  content: ""; position: absolute; left: 0; top: 50%; translate: 0 -50%;
-  width: 3px; height: 16px; border-radius: 2px; background: var(--brand-accent);
-}
-
-/* ---------- Titles ---------- */
-.title { font: var(--weight-title) var(--text-title) / 1.25 var(--font-display); margin: 0; }
-.large-title { font: var(--weight-title) var(--text-large-title) / 1.25 var(--font-display); margin: 0; }
-.secondary { color: var(--brand-text-dim); }
-.caption { font-size: var(--text-caption); color: var(--brand-text-dim); }
-
-/* ---------- Buttons ---------- */
-.button {
-  height: var(--control-h); padding: 0 12px; border-radius: var(--control-radius);
-  font: 500 var(--text-body) var(--font); color: var(--brand-text);
-  background: var(--brand-window); border: 1px solid var(--brand-line);
-}
-.button.primary { background: var(--brand-accent); border-color: transparent; color: var(--brand-on-accent); }
-:root[data-platform="macos"] .button { height: 22px; padding: 0 10px; box-shadow: 0 0.5px 1px rgb(0 0 0 / 0.15); }
-:root[data-platform="windows"] .button {
-  /* Fluent control elevation: slightly darker bottom stroke. */
-  border-bottom-color: color-mix(in srgb, var(--brand-text) 22%, var(--brand-line));
-}
-:root[data-platform="windows"] .button:active { opacity: 0.8; }
-
-/* ---------- Switch ---------- */
+/* ---------- Toggle: structure color when on, always with a text label ---------- */
 .switch { appearance: none; position: relative; flex: none; margin: 0; border: 0; }
-.switch::after { content: ""; position: absolute; border-radius: 50%; transition: translate 0.15s; }
-:root[data-platform="macos"] .switch { width: 26px; height: 15px; border-radius: 8px; background: color-mix(in srgb, var(--brand-text) 18%, transparent); }
-:root[data-platform="macos"] .switch::after { width: 13px; height: 13px; top: 1px; left: 1px; background: #fff; box-shadow: 0 0.5px 1.5px rgb(0 0 0 / 0.3); }
-:root[data-platform="macos"] .switch:checked { background: var(--brand-accent); }
-:root[data-platform="macos"] .switch:checked::after { translate: 11px; }
-:root[data-platform="windows"] .switch { width: 40px; height: 20px; border-radius: 10px; border: 1px solid var(--brand-text-dim); background: transparent; }
-:root[data-platform="windows"] .switch::after { width: 12px; height: 12px; top: 3px; left: 3px; background: var(--brand-text-dim); }
-:root[data-platform="windows"] .switch:checked { background: var(--brand-accent); border-color: transparent; }
-:root[data-platform="windows"] .switch:checked::after { translate: 20px; background: var(--brand-on-accent); }
+.switch::after { content: ""; position: absolute; border-radius: 50%; transition: translate var(--hearth-duration-quick) var(--hearth-ease-standard); }
+:root[data-platform="macos"] .switch { width: 32px; height: 18px; border-radius: 9px; background: color-mix(in srgb, var(--hearth-text) 18%, transparent); }
+:root[data-platform="macos"] .switch::after { width: 16px; height: 16px; top: 1px; left: 1px; background: #fff; box-shadow: 0 0.5px 1.5px rgb(0 0 0 / 0.3); }
+:root[data-platform="macos"] .switch:checked { background: var(--hearth-structure); }
+:root[data-platform="macos"] .switch:checked::after { translate: 14px; background: var(--hearth-on-structure); }
+:root[data-platform="windows"] .switch,
+:root[data-platform="linux"] .switch { width: 40px; height: 20px; border-radius: 10px; border: 1px solid var(--hearth-border); background: transparent; }
+:root[data-platform="windows"] .switch::after,
+:root[data-platform="linux"] .switch::after { width: 12px; height: 12px; top: 3px; left: 3px; background: var(--hearth-border); }
+:root[data-platform="windows"] .switch:checked,
+:root[data-platform="linux"] .switch:checked { background: var(--hearth-structure); border-color: transparent; }
+:root[data-platform="windows"] .switch:checked::after,
+:root[data-platform="linux"] .switch:checked::after { translate: 20px; background: var(--hearth-on-structure); }
 
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
-@media (prefers-contrast: more) { :root { --brand-line: var(--brand-text-dim); } }
+/* ---------- Segmented control (macOS) / selector bar (Windows) ---------- */
+.segmented { display: inline-flex; padding: 2px; gap: 2px; border-radius: var(--hearth-radius-pill); background: color-mix(in srgb, var(--hearth-text) 7%, transparent); }
+.segmented button { border: 0; background: none; border-radius: var(--hearth-radius-pill); padding: 3px 12px; font-size: var(--text-small); font-weight: 500; color: var(--hearth-text); }
+.segmented button[aria-checked="true"] { background: var(--app-surface); box-shadow: var(--hearth-elevation-raised); }
+
+@media (prefers-reduced-motion: reduce) { *, *::after { transition: none !important; animation: none !important; } }
+@media (prefers-contrast: more) { :root { --hearth-line: var(--hearth-border); } }

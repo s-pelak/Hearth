@@ -18,23 +18,44 @@ Color-independent platform work lives in `src-tauri/src/native.rs` and `src/nati
 - **macOS menu bar:** Hearth, File, Edit, View, Thread, Window, Help with standard ⌘ shortcuts (⌘, Settings, ⌘N New Thread, ⌘K Search, ⌃⌘S Toggle Sidebar, ⌘1 Overview). Custom items reach the UI as `menu` events.
 - **Dock presence:** Hearth is a regular app (Dock icon and menu bar) while a window is open, and drops back to menu bar only when every window is closed.
 - **Settings:** its own window on macOS (⌘,); a page inside the main window on Windows, as Fluent apps do. Windows binds the same commands to Ctrl shortcuts in `platform.ts`.
-- **Styles:** `platform.css` holds type ramps, control metrics, selection, focus and switch styles per platform (HIG on macOS, Fluent 2 on Windows). `brand.css` holds colors only; the values below are provisional until the brand style guide lands, and replacing that file should be all a rebrand needs.
+- **Styles:** `platform.css` holds type ramps, control metrics, selection, focus and switch styles per platform (HIG on macOS, Fluent 2 on Windows). Colors come only from the brand tokens below.
+- **Platform differences in the UI:** macOS uses a translucent sidebar, grey selection that dims when the window is in the background, a Settings window with icon tabs, and ⌘ shortcuts. Windows uses Mica under the navigation pane, a content layer with a rounded top-left corner, a short pill marking the selected item, Settings as a page with categories on the left, and Ctrl shortcuts.
 
-## Palette (from Stefan's whitepaper style guide, provisional)
+## Brand: Hearth app design system v2
 
-Accents keep their whitepaper meaning so a glance at a thread list says what needs attention.
+Source: `Hearth-app-design-system-v2.pdf` (27 Nov 2026). The tokens ship unchanged as `src/native/hearth-tokens.css` (and `docs/brand/hearth-tokens.json`); `src/native/brand.css` maps them to app roles. Use `--hearth-*` tokens, never hex values.
 
-| Token | Hex | Use |
-|---|---|---|
-| Teal | `#12727D` | Working, primary buttons, the local model, success values |
-| Copper | `#C9853B` | Needs you, approvals, decisions, artifacts, the flame |
-| Brick | `#B94A3E` | Failed, errors, anything that will cost money |
-| Slate | `#204254` | Labels, table heads, review state, quiet structure |
-| Ink | `#121B22` | Text in light mode |
-| Concrete | `#5A5F65` | Secondary text in light mode |
-| Mortar | `#E3E1DD` | Hairlines in light mode, text in dark mode |
+| Role | Light | Dark | Use in Hearth |
+|---|---|---|---|
+| ground | Cream `#FAF5EF` | Night `#12222B` | Window content; the sidebar is ground mixed toward Mortar |
+| surface | `#FFFFFF` | Hearthstone `#1A2F3A` | Cards, the composer, menus, artifacts pane, selected thread |
+| structure | Slate `#204254` | Cream | Icons, secondary and quiet buttons, toggles when on, "Working", focus |
+| answer | Teal `#12727D` | Glow teal `#4FB0BA` | File and source chips, "Ready for review", hearth-box online |
+| flame | Copper `#C9853B` | Copper | The one primary action per screen (Send, or Allow once / Retry when a thread waits on you), active tab underline |
+| risk | Brick `#B94A3E` | Glow brick `#E07B6D` | "Needs you", "Failed", caution notes, failed tool calls, the Overview badge |
 
-Grounds: light mode is white with a warm grey sidebar (`#F2F0ED`); dark mode is ink and slate pushed darker (`#111A21` window, `#0E161C` sidebar). In dark mode, text-colored accents use lighter tints (teal `#46B3BE`, copper `#E0A866`, brick `#E07A6D`, slate `#7FA6BB`). Never introduce a new hue. No bold body text; emphasis comes from size and weight 500.
+Rules taken from the design system:
+
+- **One flame per screen.** When a thread shows an approval or a stall, that button is Copper and Send drops to the secondary style.
+- **Two status colors.** Brick for anything that needs care, Teal for success; Working uses structure. Every status is a word plus an icon, never color alone. This replaces the earlier "copper = needs you" mapping, because Copper is reserved for the primary action and Copper text fails contrast.
+- **Shapes:** pill buttons and chips, 12 px cards and inputs, 20 px dialogs; cards get a 1 px Mortar edge; only floating layers (menus, dialogs) get the one shadow.
+- **Type:** Fraunces (bundled, SOFT axis) for screen titles at 22 px and up only. Everything else uses the platform system font (SF Pro on macOS, Segoe UI Variable on Windows) instead of the brand's Inter, so the app reads as native. Answers and messages use 15 px with a 1.6 line height.
+- **Focus:** 2 px ring in the focus token, 2 px from the control, on every interactive element.
+- **Answer anatomy:** the user's message is a hairline bubble on the right; answers have no bubble, show the model that wrote them, and end in quiet Copy / Retry. Cautions are a 3 px Brick bar starting with "Caution:". The confidence line is not shown yet; the design system says to switch it on only once confidence is reliable.
+
+## Models (from the 21-model tuning run, 27 Nov 2026)
+
+`hearth_core::models::recommended()` holds the roster the pickers and Settings start from:
+
+| Model | Where | Use for | Default for |
+|---|---|---|---|
+| Gemma 4 12B | hearth-box, 81 tok/s | Everyday text | Chats |
+| Qwen3.6 35B-A3B | hearth-box, 73 tok/s | Code and CAD | |
+| Nemotron 3.5 Bolt 74B | hearth-box, 48 tok/s, full speed at 32k | Agents and long documents | Threads |
+| Claude Haiku 5.5 | Anthropic | When a failure would cost you time | Retry with a stronger model |
+| Claude Opus 5.5 | Anthropic | CAD from images and large builds | |
+
+Local models run at a 300 W cap. Escalation stays off by default; Haiku is only what the Retry button offers first.
 
 ## Window layout
 

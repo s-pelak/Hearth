@@ -3,6 +3,7 @@
 
 pub mod agent;
 pub mod escalation;
+pub mod models;
 pub mod provider;
 pub mod store;
 pub mod tools;

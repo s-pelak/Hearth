@@ -27,6 +27,12 @@ fn list_providers() -> Vec<ProviderInfo> {
         .collect()
 }
 
+/// The model roster recommended by the tuning run, for pickers and Settings.
+#[tauri::command]
+fn recommended_models() -> Vec<hearth_core::models::RecommendedModel> {
+    hearth_core::models::recommended()
+}
+
 /// Ask a provider which models it serves (local providers need no key).
 #[tauri::command]
 async fn list_models(provider_id: String) -> Result<Vec<String>, String> {
@@ -105,7 +111,7 @@ pub fn run() {
                 native::sync_activation_policy(window.app_handle());
             }
         })
-        .invoke_handler(tauri::generate_handler![list_providers, list_models, native::window_chrome, native::open_settings])
+        .invoke_handler(tauri::generate_handler![list_providers, list_models, recommended_models, native::window_chrome, native::open_settings])
         .run(tauri::generate_context!())
         .expect("error while running Hearth");
 }
