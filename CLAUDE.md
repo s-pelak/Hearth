@@ -12,7 +12,7 @@ Read docs/PLAN.md (what and why, phases) and docs/UI.md (design requirements) be
 - API keys go in the OS keychain, never in files or logs.
 - File tools must stay confined to the project folder (`tools::fs::resolve`).
 - Keep the tool list order stable between calls (the registry is sorted) so prompt caching works.
-- macOS UI follows Apple's Human Interface Guidelines: system font, native chrome, ⌘ shortcuts, Settings on ⌘,. Follow system light/dark. Colors only from the palette in docs/UI.md.
+- macOS UI follows Apple's Human Interface Guidelines: system font, native chrome, ⌘ shortcuts, Settings on ⌘,. Follow system light/dark. Colors only from the Hearth tokens (`src/native/hearth-tokens.css`, see docs/UI.md); Windows follows Fluent.
 - Anthropic adapter: replay assistant `native` content blocks unchanged; do not send `temperature`.
 
 ## Commands

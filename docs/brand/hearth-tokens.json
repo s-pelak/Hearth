@@ -1,0 +1,191 @@
+{
+  "color": {
+    "light": {
+      "ground": "#FAF5EF",
+      "surface": "#FFFFFF",
+      "structure": "#204254",
+      "text": "#121B22",
+      "muted": "#6A625B",
+      "line": "#E6DFD6",
+      "border": "#6A625B",
+      "answer": "#12727D",
+      "flame": "#C9853B",
+      "risk": "#B94A3E",
+      "info": "#204254",
+      "success": "#12727D",
+      "on-flame": "#121B22",
+      "on-structure": "#FAF5EF",
+      "focus": "#204254",
+      "scrim": "#12222B66",
+      "flame-hover": "#BA7D39",
+      "flame-pressed": "#B37838",
+      "structure-hover": "#315060",
+      "structure-pressed": "#3A5767",
+      "answer-hover": "#257C86",
+      "answer-pressed": "#2E828B",
+      "risk-hover": "#AC463C",
+      "risk-pressed": "#A5443B",
+      "surface-hover": "#EDF0F1",
+      "surface-pressed": "#E4E8EA"
+    },
+    "dark": {
+      "ground": "#12222B",
+      "surface": "#1A2F3A",
+      "structure": "#FAF5EF",
+      "text": "#FAF5EF",
+      "muted": "#A39A90",
+      "line": "#2E4552",
+      "border": "#A39A90",
+      "answer": "#4FB0BA",
+      "flame": "#C9853B",
+      "risk": "#E07B6D",
+      "info": "#FAF5EF",
+      "success": "#4FB0BA",
+      "on-flame": "#121B22",
+      "on-structure": "#12222B",
+      "focus": "#FAF5EF",
+      "scrim": "#000000A3",
+      "flame-hover": "#BA7D39",
+      "flame-pressed": "#B37838",
+      "structure-hover": "#E7E4DF",
+      "structure-pressed": "#DEDCD7",
+      "answer-hover": "#4AA5AF",
+      "answer-pressed": "#489FA9",
+      "risk-hover": "#E28577",
+      "risk-pressed": "#E38A7D",
+      "surface-hover": "#2C3F48",
+      "surface-pressed": "#354750"
+    }
+  },
+  "space": {
+    "0": 0,
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "5": 24,
+    "6": 32,
+    "7": 48,
+    "8": 64
+  },
+  "radius": {
+    "sm": 6,
+    "md": 12,
+    "lg": 20,
+    "pill": 999
+  },
+  "motion": {
+    "duration": {
+      "instant": 100,
+      "quick": 150,
+      "standard": 200,
+      "gentle": 300,
+      "flame-catch": 600
+    },
+    "easing": {
+      "standard": [
+        0.2,
+        0,
+        0,
+        1
+      ],
+      "enter": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "exit": [
+        0.3,
+        0,
+        1,
+        1
+      ]
+    }
+  },
+  "type": {
+    "display": {
+      "family": "Fraunces",
+      "weight": 500,
+      "size": 54,
+      "lineHeight": 60,
+      "use": "Onboarding and empty-state hero only"
+    },
+    "title-l": {
+      "family": "Fraunces",
+      "weight": 500,
+      "size": 28,
+      "lineHeight": 34,
+      "use": "Screen titles"
+    },
+    "title-m": {
+      "family": "Fraunces",
+      "weight": 500,
+      "size": 22,
+      "lineHeight": 28,
+      "use": "Section and dialog titles"
+    },
+    "lede": {
+      "family": "Inter",
+      "weight": 500,
+      "size": 19,
+      "lineHeight": 26,
+      "use": "Intros, first lines"
+    },
+    "body": {
+      "family": "Inter",
+      "weight": 400,
+      "size": 16,
+      "lineHeight": 24,
+      "use": "Messages, body text"
+    },
+    "body-s": {
+      "family": "Inter",
+      "weight": 400,
+      "size": 14,
+      "lineHeight": 20,
+      "use": "Dense lists, secondary text"
+    },
+    "label": {
+      "family": "Inter",
+      "weight": 500,
+      "size": 14,
+      "lineHeight": 20,
+      "use": "Buttons, tabs, inputs"
+    },
+    "caps": {
+      "family": "Inter",
+      "weight": 500,
+      "size": 12,
+      "lineHeight": 16,
+      "use": "Section labels, caps +0.08em"
+    },
+    "caption": {
+      "family": "Inter",
+      "weight": 400,
+      "size": 13,
+      "lineHeight": 18,
+      "use": "Captions, timestamps, sources"
+    }
+  },
+  "elevation": {
+    "flat": "none",
+    "raised": "0 0 0 1px var(--hearth-line)",
+    "float": "0 8px 24px rgba(18,34,43,0.14)"
+  },
+  "target": {
+    "ios": 44,
+    "android": 48,
+    "web": 40
+  },
+  "state": {
+    "hover": 0.08,
+    "pressed": 0.12,
+    "disabled": 0.4
+  },
+  "breakpoint": {
+    "compact": 0,
+    "medium": 600,
+    "expanded": 1024
+  }
+}

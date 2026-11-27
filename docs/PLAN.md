@@ -25,7 +25,8 @@ It talks to local models on Stefan's headless LLM box (llama.cpp / LM Studio, Op
 | Repo | github.com/s-pelak/Hearth (this repo). Apache-2.0. |
 | Escalation | **Optional and off by default.** Nothing calls a paid model unless the user turns escalation on for a project, or presses "Retry with stronger model" on a stalled thread. Monthly cap (default $10) with a prompt before going past it. |
 | Settings | In a menu in the lower left of the sidebar: Escalation, Models, File locations, Connectors and skills, General. On macOS it is also the standard Settings window opened with ⌘,. |
-| Look | Follows the system light/dark appearance. Mac app follows Apple's Human Interface Guidelines with the system font (SF Pro). Whitepaper palette (teal, copper, brick, slate) as accents. Windows gets the Fluent equivalents. |
+| Look | Follows the system light/dark appearance. Mac app follows Apple's Human Interface Guidelines with the system font (SF Pro); Windows follows Fluent. Colors, shapes and title type from the Hearth app design system v2 (see UI.md). |
+| Models | From the 21-model tuning run: Gemma 4 12B (everyday text, chats), Qwen3.6 35B-A3B (code and CAD), Nemotron 3.5 Bolt 74B (agents, threads), all on hearth-box at 300 W; Claude Haiku 5.5 when a failure costs time; Opus 5.5 for CAD from images and large builds. |
 | Layout | Very close to Claude's own projects interface, everything collapsible. See UI.md. |
 | Signing | Stefan has a free Apple developer account, which cannot sign for distribution. Builds are ad-hoc signed (`signingIdentity: "-"`); first launch needs right-click > Open. Windows SmartScreen asks once. |
 | Networking | The LLM box is reached over Tailscale (set up in a separate thread). Its tailnet name becomes the default `hearth-box` endpoint, currently a placeholder `http://hearth-box:8080/v1`. |
@@ -47,7 +48,7 @@ docs/             This plan, UI requirements, mockup, brand assets
 ### Providers
 
 - **OpenAI-compatible** covers llama.cpp server, LM Studio, Ollama, OpenAI, Gemini (its OpenAI endpoint), OpenRouter. Streams text and tool-call deltas over SSE; `/models` for discovery.
-- **Anthropic** uses the Messages API over raw HTTP (no official Rust SDK). Assistant turns keep their native content blocks (including thinking blocks) and replay them unchanged to Anthropic. Do not send `temperature` (newer models reject it). Model list comes from `/v1/models`; the default escalation suggestion is `claude-sonnet-5-5` (cheaper) or `claude-opus-5-5`.
+- **Anthropic** uses the Messages API over raw HTTP (no official Rust SDK). Assistant turns keep their native content blocks (including thinking blocks) and replay them unchanged to Anthropic. Do not send `temperature` (newer models reject it). Model list comes from `/v1/models`; the default escalation suggestion is `claude-haiku-5-5` (cheaper than local per completed task in the tuning run), with `claude-opus-5-5` for CAD from images and large builds. See `hearth_core::models`.
 - **Apple Foundation Models** (phase 2, macOS 26+, Apple silicon): a small Swift sidecar exposing the on-device model as a local OpenAI-compatible endpoint. Good for titles, summaries, routing and classification; too small for multi-step agent work.
 - API keys live in the OS keychain (Keychain / Credential Manager), never in config files.
 
