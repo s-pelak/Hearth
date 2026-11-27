@@ -105,7 +105,7 @@ impl Store {
             name: name.into(),
             instructions: String::new(),
             folder: folder.into(),
-            default_model: None,
+            default_model: Some(crate::models::RoleDefaults::default().threads),
             escalation: EscalationPolicy::default(),
         };
         self.save_project(&p)?;
@@ -243,7 +243,8 @@ mod tests {
         let s = Store::in_memory().unwrap();
         let p = s.create_project("Benchmarks", "/tmp/b").unwrap();
         assert!(!s.projects().unwrap()[0].escalation.enabled);
-        let m = ModelRef::new("hearth-box", "qwen3.5-9b");
+        let m = ModelRef::new("hearth-box", crate::models::NEMOTRON);
+        assert_eq!(s.projects().unwrap()[0].default_model.as_ref(), Some(&m));
         let t = s.create_thread(Some(&p.id), "Test", &m).unwrap();
         s.append_message(&t.id, &Message::user("hi")).unwrap();
         s.append_message(&t.id, &Message::assistant("hello")).unwrap();

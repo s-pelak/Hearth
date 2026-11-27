@@ -51,6 +51,21 @@ docs/             This plan, UI requirements, mockup, brand assets
 - **Apple Foundation Models** (phase 2, macOS 26+, Apple silicon): a small Swift sidecar exposing the on-device model as a local OpenAI-compatible endpoint. Good for titles, summaries, routing and classification; too small for multi-step agent work.
 - API keys live in the OS keychain (Keychain / Credential Manager), never in config files.
 
+### Local models
+
+Hearth is set up for three models on the LLM box, from Stefan's November 2026 tuning run of 21 models (`crates/hearth-core/src/models.rs`):
+
+| Model | Kept for | Thinking | Sampling | Default for |
+|---|---|---|---|---|
+| `gemma-4-12b` | Everyday text, reading images | on | temperature 1.3, top-p 1.0, repeat penalty 1.05 | Chats |
+| `qwen3.6-35b-a3b` | Code and CAD from text | off | model card | Code threads |
+| `nemotron-3.5-bolt-74b` | Agents and long documents | on | model card | Threads, coordinator, summaries |
+
+- Served ids are matched loosely (publisher, `-GGUF`, `-it` and quant tags such as `@Q4_K_M` are ignored), so whatever name LM Studio or llama.cpp reports still resolves. Variants such as Gemma-4-12B heretic do not match.
+- Thinking goes to llama.cpp as `chat_template_kwargs.enable_thinking`, sampling as `temperature`, `top_p` and `repeat_penalty`. These are sent only to the LLM box, never to cloud providers.
+- New projects default to Nemotron for threads. Other models the box serves still appear in its list but are never a default.
+- The run recommends a 300 W GPU cap for all three; that is set on the box, not by Hearth.
+
 ### Agent loop and escalation
 
 One loop per thread: call model, run tool calls, append results, repeat, up to a step limit. The `StallDetector` counts three failure patterns that Stefan's benchmark showed small local models hit often:
@@ -68,7 +83,7 @@ Built to work on a small local model:
 - **Event-driven:** wakes only for a message in the project chat, a thread finishing or getting stuck, or a goal firing. One short call per wake.
 - **Reads summaries, not transcripts:** project instructions plus each thread's title, status and a two-line summary (a few thousand tokens).
 - **Constrained JSON output:** actions like `start_thread`, `reply`, `ask_user` (decision card), `wait`. llama.cpp enforces the schema with a grammar / `response_format: json_schema`.
-- **Own model setting:** small local model, Apple FM, or cloud. **Direct mode** turns the coordinator off.
+- **Own model setting:** local model (Nemotron by default), Apple FM, or cloud. **Direct mode** turns the coordinator off.
 - **Provider queue:** parallel threads are queued to match the LLM box's slot count.
 
 ### Context management for small models

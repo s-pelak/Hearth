@@ -1,6 +1,6 @@
 //! Hearth desktop shell: tray / menu bar icon, main window, and commands into hearth-core.
 
-use hearth_core::{ProviderConfig, ProviderKind};
+use hearth_core::{ProviderConfig, ProviderKind, Role, RoleDefaults, models};
 use serde::Serialize;
 use tauri::menu::{Menu, MenuItem};
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
@@ -29,6 +29,36 @@ fn list_providers() -> Vec<ProviderInfo> {
 async fn list_models(provider_id: String) -> Result<Vec<String>, String> {
     let cfg = ProviderConfig::defaults().into_iter().find(|p| p.id == provider_id).ok_or("unknown provider")?;
     cfg.build(None).list_models().await.map_err(|e| e.to_string())
+}
+
+#[derive(Serialize)]
+struct KeptModel {
+    id: &'static str,
+    name: &'static str,
+    strength: hearth_core::models::Strength,
+    /// Roles this model is the default for.
+    roles: Vec<Role>,
+    /// The id the box serves it under, or `None` if it is not on the box.
+    served_as: Option<String>,
+}
+
+/// The three local models Hearth uses, and whether the LLM box has each one.
+#[tauri::command]
+async fn kept_models() -> Result<Vec<KeptModel>, String> {
+    let cfg = ProviderConfig::defaults().into_iter().find(|p| p.id == models::LOCAL_PROVIDER).ok_or("no LLM box configured")?;
+    let served = cfg.build(None).list_models().await.map_err(|e| e.to_string())?;
+    let defaults = RoleDefaults::default();
+    let all = [Role::Threads, Role::Coordinator, Role::Chat, Role::Code, Role::Summaries];
+    Ok(models::resolve(&served)
+        .into_iter()
+        .map(|(m, served_as)| KeptModel {
+            id: m.id,
+            name: m.name,
+            strength: m.strength,
+            roles: all.iter().copied().filter(|r| defaults.get(*r).model == m.id).collect(),
+            served_as,
+        })
+        .collect())
 }
 
 fn show_main(app: &AppHandle) {
@@ -89,7 +119,7 @@ pub fn run() {
                 let _ = window.hide();
             }
         })
-        .invoke_handler(tauri::generate_handler![list_providers, list_models])
+        .invoke_handler(tauri::generate_handler![list_providers, list_models, kept_models])
         .run(tauri::generate_context!())
         .expect("error while running Hearth");
 }

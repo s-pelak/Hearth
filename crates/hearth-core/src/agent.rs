@@ -1,6 +1,7 @@
 //! The agent loop for one thread: call the model, run its tool calls, repeat.
 
 use crate::escalation::{EscalationPolicy, StallDetector, StallReason};
+use crate::models;
 use crate::provider::{Provider, ProviderError};
 use crate::tools::{Permission, ToolRegistry};
 use crate::types::{ChatRequest, Message, ModelRef, ToolCall, Usage};
@@ -82,7 +83,14 @@ pub async fn run(cfg: &mut AgentRun, history: &mut Vec<Message>, hooks: &dyn Age
         if cfg.cancel.load(Ordering::Relaxed) {
             return Ok(Outcome::Cancelled);
         }
-        let req = ChatRequest { model: cfg.model.model.clone(), messages: history.clone(), tools: cfg.tools.specs(), max_tokens: cfg.max_tokens };
+        let req = ChatRequest {
+            model: cfg.model.model.clone(),
+            messages: history.clone(),
+            tools: cfg.tools.specs(),
+            max_tokens: cfg.max_tokens,
+            // Looked up each step, so an escalated cloud model gets none of the local settings.
+            settings: models::settings_for(&cfg.model),
+        };
         let sink = |t: &str| hooks.emit(AgentEvent::Delta { text: t.to_string() });
         let done = cfg.provider.complete(&req, &sink).await?;
         hooks.emit(AgentEvent::Usage { model: cfg.model.clone(), usage: done.usage.clone() });

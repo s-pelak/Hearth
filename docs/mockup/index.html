@@ -293,7 +293,7 @@ h2.s{font:500 22px/1.15 var(--sysd);margin:0 0 10px}
 <div class="mhead"><button class="ib" id="listShow" aria-label="Show thread list" title="Show thread list" hidden><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M6 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button><h3 id="ttl"></h3><span class="chip" id="mdl"></span><span class="st" id="mst"></span><span class="ctx" id="ctx" title="Context used"></span><details class="menu"><summary class="ib" aria-label="Thread actions" title="Thread actions"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="3.5" cy="8" r="1.2" fill="currentColor"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/><circle cx="12.5" cy="8" r="1.2" fill="currentColor"/></svg></summary><div class="mm"><button>Mark done<span>⌘↩</span></button><button>Remind me in 1 day</button><button>Remind me in 1 week</button><hr><button>Rename</button><button>Move to project…</button><button>Switch model…</button><hr><button>Export transcript</button><button>Archive</button></div></details><button class="ib" id="artBtn" aria-label="Toggle artifacts" title="Toggle artifacts"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="2" fill="none" stroke="currentColor"/><path d="M10 3v10" stroke="currentColor"/></svg></button></div>
 <div class="feed" id="feed"></div>
 <div class="composer"><div class="cbox"><div class="ph">Reply, type @ to mention a file or thread, or drop files here</div>
-<div class="crow"><button class="ib" aria-label="Attach files" title="Attach files"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 4.5 5.8 9.2a1.5 1.5 0 0 0 2.1 2.1l4.6-4.6a3 3 0 0 0-4.2-4.2L3.6 7.2a4.5 4.5 0 0 0 6.4 6.4l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button><span class="chip" id="cmod">Qwen3.5-9B</span><span class="chip">4 tools</span><span class="sp"></span><span class="k" id="tok" style="font-size:12px;color:var(--faint)"></span><button class="btn pri">Send</button></div></div></div>
+<div class="crow"><button class="ib" aria-label="Attach files" title="Attach files"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M10.5 4.5 5.8 9.2a1.5 1.5 0 0 0 2.1 2.1l4.6-4.6a3 3 0 0 0-4.2-4.2L3.6 7.2a4.5 4.5 0 0 0 6.4 6.4l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.3"/></svg></button><span class="chip" id="cmod">Nemotron-3.5-Bolt-74B</span><span class="chip">4 tools</span><span class="sp"></span><span class="k" id="tok" style="font-size:12px;color:var(--faint)"></span><button class="btn pri">Send</button></div></div></div>
 </section>
 <section class="alt" id="alt"></section>
 <aside class="arts">
@@ -314,7 +314,7 @@ h2.s{font:500 22px/1.15 var(--sysd);margin:0 0 10px}
 <div class="mb" role="img" aria-label="Menu bar popover mockup">
 <div class="mbar"><span>Wi-Fi</span><span class="fl"><svg width="12" height="15" viewBox="0 0 24 30" aria-hidden="true"><path d="M12 1c1 6 9 9 9 17a9 9 0 0 1-18 0c0-4 2-6.5 4-8.5 0 3 1.5 4.5 3 5-1-5 1-9 2-13.5z" fill="currentColor"/></svg><em></em></span><span>Thu 3:58 PM</span></div>
 <div class="pop">
-<div class="row"><span class="sel">Benchmarks ▾</span><span class="sel">Qwen3.5-9B ▾</span><span style="margin-left:auto" class="k">⌥ Space</span></div>
+<div class="row"><span class="sel">Benchmarks ▾</span><span class="sel">Nemotron-3.5-Bolt-74B ▾</span><span style="margin-left:auto" class="k">⌥ Space</span></div>
 <div class="in">Ask Hearth, or start a thread</div>
 <div class="runs">
 <div class="r"><span>Rerun A1–A7 on gemma-4-12b</span><span class="st working"><span class="pulse"></span>working</span></div>
@@ -347,7 +347,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"
 const projects=[["Benchmarks","#12727D",4,true],["Local LLM Machine","#C9853B",2],["Bike Buddy mount","#B94A3E",1],["Home lab notes","#7FA6BB",0]];
 const stLabel={working:'<span class="pulse"></span>working',blocked:"needs you",review:"ready for review",done:"done",failed:"failed"};
 const threads=[
-{t:"Grade C4 bracket STL",s:"blocked",m:"Qwen3.5-9B",when:"2 min",ctx:[21,32],tok:"38k tokens · $0.00",feed:[
+{t:"Grade C4 bracket STL",s:"blocked",m:"Nemotron-3.5-Bolt-74B",when:"2 min",ctx:[21,32],tok:"38k tokens · $0.00",feed:[
 ["user","Build the C4 bracket in OpenSCAD and check it against the reference STL."],
 ["check",[["Render C4.scad",1],["Compare with the reference STL",1],["Fix the hole offset",2],["Re-render and grade",0]]],
 ["tool","openscad.render","C4.scad → C4.stl","ok · 3.1 s"],
@@ -359,24 +359,24 @@ const threads=[
 ["stall","The same tool call failed 3 times in a row. Auto-escalate is off for this project, so the thread has paused."],
 ["art","C4.scad","v3 · 1.9 KB"]]},
 {t:"Rerun A1–A7 on gemma-4-12b",s:"working",m:"gemma-4-12b",when:"now",ctx:[9,32],tok:"61k tokens · $0.00",feed:[
-["user","Rerun agent tasks A1 to A7 on gemma-4-12b and compare with qwen3.5-9b."],
-["check",[["Load gemma-4-12b on the box",1],["Run A1–A4",1,"2 helpers"],["Run A5–A7",2,"2 helpers"],["Compare with qwen3.5-9b",0],["Write the comparison",0]]],
+["user","Rerun agent tasks A1 to A7 on gemma-4-12b and compare with nemotron-3.5-bolt-74b."],
+["check",[["Load gemma-4-12b on the box",1],["Run A1–A4",1,"2 helpers"],["Run A5–A7",2,"2 helpers"],["Compare with nemotron-3.5-bolt-74b",0],["Write the comparison",0]]],
 ["tool","box.load_model","gemma-4-12b Q6_K","ok · 14 s"],
 ["tool","agent.spawn","A1–A4 → 2 helpers","ok"],
 ["ai","A1 to A4 are done: 4 of 4 passed. Two helpers are running A5 to A7 now."]]},
-{t:"Rerun A11 web research",s:"blocked",m:"Qwen3.5-9B",when:"4 min",ctx:[27,32],tok:"52k tokens · $0.00",feed:[
+{t:"Rerun A11 web research",s:"blocked",m:"Nemotron-3.5-Bolt-74B",when:"4 min",ctx:[27,32],tok:"52k tokens · $0.00",feed:[
 ["user","Rerun task A11 and collect the two source pages into a brief."],
 ["tool","web.fetch","2 pages","ok · 28 KB"],
 ["tool","fs.write","notes/brief.md","ok"],
 ["sum","Earlier turns were summarized to stay under the 32k context limit. The full transcript is kept."],
 ["approve","web.fetch","https://github.com/ggml-org/llama.cpp/releases","This project hasn't fetched from github.com before."]]},
-{t:"Summarize tool-call failures",s:"review",m:"Qwen3.5-9B",when:"1 h",ctx:[12,32],tok:"19k tokens · $0.00",feed:[
+{t:"Summarize tool-call failures",s:"review",m:"Nemotron-3.5-Bolt-74B",when:"1 h",ctx:[12,32],tok:"19k tokens · $0.00",feed:[
 ["user","Summarize where the local models failed in the last benchmark run."],
 ["tool","fs.read","check/events.log","ok · 8.1 KB"],
 ["ai","Most failures were malformed tool calls and repeated identical calls. The table is in the artifact on the right."],
 ["art","failures.md","v1 · 1.2 KB"],
 ["review"]]},
-{t:"Pick a default coding model",s:"failed",m:"Qwen3.5-9B",when:"Tue",ctx:[30,32],tok:"88k tokens · $0.00",feed:[
+{t:"Pick a default coding model",s:"failed",m:"Nemotron-3.5-Bolt-74B",when:"Tue",ctx:[30,32],tok:"88k tokens · $0.00",feed:[
 ["user","Run the A4 test-fix task on each loaded model."],
 ["tool","shell.run","pytest tests/","error",true,"2 failed, 3 passed"],
 ["ai","I could not get the remaining tests to pass. Stopped after 12 steps (the project limit)."]]}];
@@ -400,17 +400,17 @@ if(open.projects)projects.forEach((p,i)=>{const k="p"+i;
 h+=`<button class="row${!open[k]?" closed":""}" data-t="${k}"><span class="car">▾</span><span class="sw" style="background:${p[1]}"></span><span class="tx">${esc(p[0])}</span><span class="n">${p[2]||""}</span></button>`;
 if(open[k])h+=`<div class="subn">`+subs.map(s=>`<button class="row${i===0&&view===s[0]?" on":""}" data-v="${s[0]}"><span class="ic">${ic[s[0]]}</span><span class="tx">${s[1]}</span><span class="n">${i===0?s[2]:""}</span></button>`).join("")+`</div>`;});
 $("nav").innerHTML=h;}
-const ideas=[["Inbox",[["Benchmark Apple FM as a router","Does the on-device model pick the right thread type?","Today"],["Speculative decoding on the box","Draft model for qwen3-coder-30b","Yesterday"],["Grade STLs by volume overlap","Turn the C4 check into a reusable tool","Mon"]]],["Planning",[["Escalation cost report","Monthly tokens and dollars by trigger","Plan doc"],["Context limits per model","Which tasks overflow 32k?","2 notes"]]],["Promoted",[["Nightly smoke test","Became a goal","Goal"]]]];
-const goals=[["Nightly benchmark smoke test","Runs A1–A4 on every loaded model","Daily, 2:00 AM","qwen3.5-9b · local","Last run done, 4/4",true],["Watch llama.cpp releases","Fetch the changelog, summarize what matters for the box","Mondays, 8:00 AM","gemma-4-12b · local","Last run done",true],["Retune when a new model lands","Run the tuning suite and write a short report","When hearth-box adds a model","qwen3.5-9b · cap $2","Never run",false]];
+const ideas=[["Inbox",[["Benchmark Apple FM as a router","Does the on-device model pick the right thread type?","Today"],["Speculative decoding on the box","Draft model for qwen3.6-35b-a3b","Yesterday"],["Grade STLs by volume overlap","Turn the C4 check into a reusable tool","Mon"]]],["Planning",[["Escalation cost report","Monthly tokens and dollars by trigger","Plan doc"],["Context limits per model","Which tasks overflow 32k?","2 notes"]]],["Promoted",[["Nightly smoke test","Became a goal","Goal"]]]];
+const goals=[["Nightly benchmark smoke test","Runs A1–A4 on every loaded model","Daily, 2:00 AM","nemotron-3.5-bolt-74b · local","Last run done, 4/4",true],["Watch llama.cpp releases","Fetch the changelog, summarize what matters for the box","Mondays, 8:00 AM","gemma-4-12b · local","Last run done",true],["Retune when a new model lands","Run the tuning suite and write a short report","When hearth-box adds a model","nemotron-3.5-bolt-74b · cap $2","Never run",false]];
 function renderAlt(){
 let head="",body="";
-if(view==="coord"){head=`<h3>Benchmarks coordinator</h3><span class="chip"><b>Qwen3.5-9B</b> · JSON mode</span><span class="chip">Reads thread summaries only</span>`;
+if(view==="coord"){head=`<h3>Benchmarks coordinator</h3><span class="chip"><b>Nemotron-3.5-Bolt-74B</b> · JSON mode</span><span class="chip">Reads thread summaries only</span>`;
 body=`<div class="feed" style="padding:0"><div class="msg user">Rerun the agent suite on gemma-4-12b and tell me which tasks regressed.</div>
 <div class="msg"><div class="who">Coordinator</div>Started 2 threads: <span class="lnk">Rerun A1–A7 on gemma-4-12b</span> and <span class="lnk">Rerun A11 web research</span>. The box has 2 slots, so both run now. I'll report when they finish.</div>
 <div class="ev"><b>Needs you</b> · Grade C4 bracket STL paused after the same tool call failed 3 times.</div>
 <div class="msg"><div class="who">Coordinator</div>Grade C4 is waiting on you. It's an OpenSCAD syntax error the 9B model keeps repeating. You can retry it on Claude Sonnet 5.5 for about $0.04, or I can leave it.</div>
 <div class="ev">Rerun A1–A7 finished · 6 of 7 passed, A4 regressed</div>
-<div class="msg"><div class="who">Coordinator</div>gemma-4-12b regressed on A4, the test-fix task, and matched qwen3.5-9b everywhere else. I added "Check A4 tool-call format on gemma" to Ideas.</div>
+<div class="msg"><div class="who">Coordinator</div>gemma-4-12b regressed on A4, the test-fix task, and matched nemotron-3.5-bolt-74b everywhere else. I added "Check A4 tool-call format on gemma" to Ideas.</div>
 <div class="dec"><b>Which quant should the nightly goal use for gemma-4-12b?</b><div class="opt rec"><div><b>Q6_K</b><small>Near full quality, leaves room for 32k context</small></div><span class="rt">Recommended</span></div><div class="opt"><div><b>Q8_0</b><small>Best quality, context drops to about 16k</small></div></div><div class="opt"><div><b>Q4_K_M</b><small>Fastest, measurably worse on A4 and A11</small></div></div></div></div>`;}
 else if(view==="ideas"){head=`<h3>Benchmarks ideas</h3><button class="btn">New idea</button>`;
 body=`<div class="board">`+ideas.map(c=>`<div class="col"><h4>${esc(c[0])}<span>${c[1].length}</span></h4>`+c[1].map(x=>`<div class="card">${esc(x[0])}<p>${esc(x[1])}</p><div class="acts">${c[0]==="Promoted"?`<span class="tag">${esc(x[2])}</span>`:`<button class="btn">Start thread</button><button class="btn">Make goal</button><span class="tag" style="margin-left:auto">${esc(x[2])}</span>`}</div></div>`).join("")+`</div>`).join("")+`</div>`;}
@@ -429,16 +429,16 @@ body=`<details class="osec" open><summary><span class="car">▾</span>Needs you 
 <details class="osec"><summary><span class="car">▾</span>Reminders · 1</summary><div class="oc"><div>Pick a default coding model<small>Benchmarks · comes back Monday</small></div><div class="acts"><button class="btn">Open</button></div></div></details>
 <details class="osec"><summary><span class="car">▾</span>Done today · 4</summary><div class="oc"><div>Watch llama.cpp releases<small>Goal run · 8:00 AM</small></div></div></details>`;}
 else if(view==="library"){head=`<h3>Benchmarks library</h3><span class="chip">~/Hearth/Projects/Benchmarks</span><button class="btn">Open in Finder</button>`;
-const files=[["failures.md","Doc","v1","Summarize tool-call failures","1 h","1.2 KB"],["C4.scad","OpenSCAD","v3","Grade C4 bracket STL","2 min","1.9 KB"],["C4.stl","Mesh","v3","Grade C4 bracket STL","2 min","477 KB"],["brief.md","Doc","draft","Rerun A11 web research","4 min","3.4 KB"],["gemma-vs-qwen.md","Doc","v1","Rerun A1–A7 on gemma-4-12b","now","0.8 KB"],["H2.html","Page","v2","Build H2 dashboard","Tue","7.4 KB"],["G1.svg","Image","v1","Draw G1 logo","Tue","0.2 KB"],["events.log","Log","—","Uploaded","Mon","8.1 KB"],["memory.md","Memory","v14","Agents","1 h","2.6 KB"]];
+const files=[["failures.md","Doc","v1","Summarize tool-call failures","1 h","1.2 KB"],["C4.scad","OpenSCAD","v3","Grade C4 bracket STL","2 min","1.9 KB"],["C4.stl","Mesh","v3","Grade C4 bracket STL","2 min","477 KB"],["brief.md","Doc","draft","Rerun A11 web research","4 min","3.4 KB"],["gemma-vs-nemotron.md","Doc","v1","Rerun A1–A7 on gemma-4-12b","now","0.8 KB"],["H2.html","Page","v2","Build H2 dashboard","Tue","7.4 KB"],["G1.svg","Image","v1","Draw G1 logo","Tue","0.2 KB"],["events.log","Log","—","Uploaded","Mon","8.1 KB"],["memory.md","Memory","v14","Agents","1 h","2.6 KB"]];
 body=`<div class="scroll"><table class="lib"><thead><tr><th>Name</th><th>Kind</th><th>Version</th><th>From</th><th class="r">Updated</th><th class="r">Size</th></tr></thead><tbody>`+files.map(f=>`<tr><td><svg width="12" height="14" viewBox="0 0 14 16" aria-hidden="true"><path d="M1 1h8l4 4v10H1z" fill="none" style="stroke:var(--copperL)"/></svg>${esc(f[0])}</td><td>${esc(f[1])}</td><td>${esc(f[2])}</td><td>${esc(f[3])}</td><td class="r">${esc(f[4])}</td><td class="r">${esc(f[5])}</td></tr>`).join("")+`</tbody></table></div>`;}
 else if(view==="psettings"){head=`<h3>Benchmarks settings</h3><span class="chip">Overrides the app defaults</span>`;
 body=`<div class="fr"><div class="lb">Instructions<small>Every thread and the coordinator read these</small></div><div class="ta">You run agent benchmarks on the LLM box. Keep results in results/, one markdown file per run. Never delete earlier runs. Report pass rates as "n of m".</div></div>
 <div class="fr"><div class="lb">Folder<small>Files and artifacts live here</small></div><div class="path">~/Hearth/Projects/Benchmarks</div></div>
-<div class="fr"><div class="lb">Models<small>Per project</small></div><div class="inl"><span class="chip">Threads: <b>qwen3.5-9b</b></span><span class="chip">Coordinator: <b>qwen3.5-9b</b></span><span class="chip">Escalation: <b>off</b></span></div></div>
+<div class="fr"><div class="lb">Models<small>Per project</small></div><div class="inl"><span class="chip">Threads: <b>nemotron-3.5-bolt-74b</b></span><span class="chip">Coordinator: <b>nemotron-3.5-bolt-74b</b></span><span class="chip">Escalation: <b>off</b></span></div></div>
 <div class="fr"><div class="lb">Coordinator<small>Direct mode turns it off</small></div><div class="inl"><button class="sw3 on" aria-pressed="true" aria-label="Coordinator on"></button><span>On, wakes on events only</span></div></div>
 <div class="fr"><div class="lb">Connectors and skills<small>Enabled for this project</small></div><div class="chips"><span class="chip on">filesystem</span><span class="chip on">openscad</span><span class="chip on">web</span><span class="chip">playwright</span><span class="chip on">whitepaper-pdf</span></div></div>
 <div class="fr"><div class="lb">Memory<small>memory.md · agents can read and update it</small></div><div class="ta">- Box has 2 parallel slots; queue extra threads.
-- qwen3.5-9b loops on OpenSCAD syntax errors; check line numbers first.
+- nemotron-3.5-bolt-74b loops on OpenSCAD syntax errors; check line numbers first.
 - Stefan prefers n of m over percentages.</div></div>
 <div class="fr"><div class="lb">Context<small>For small local models</small></div><div class="inl"><button class="sw3 on" aria-pressed="true" aria-label="Summarize near limit"></button><span>Summarize older turns at 80% of the context window</span></div></div>`;}
 else if(view==="chat"){head=`<h3>${esc(chats[chatSel])}</h3><span class="chip"><b>gemma-4-12b</b> on hearth-box</span><span class="chip">No tools</span>`;
@@ -469,7 +469,7 @@ function one(arr){return arr.map(x=>{
 if(x[0]==="user")return `<div class="msg user">${esc(x[1])}</div>`;
 if(x[0]==="ai")return `<div class="msg"><div class="who">${esc(threads[cur].m)}</div>${esc(x[1])}</div>`;
 if(x[0]==="tool")return `<div class="tool${x[4]?" err":""}"><div class="h"><span>${esc(x[1])}</span><span>${esc(x[2])}</span><span>${esc(x[3])}</span></div>${x[5]?`<pre>${esc(x[5])}</pre>`:""}</div>`;
-if(x[0]==="stall")return `<div class="note"><b>Paused.</b> ${esc(x[1])}<div class="acts"><button class="btn cop">Retry with Claude Sonnet 5.5 · about $0.04</button><button class="btn">Let Qwen try again</button><button class="btn">Edit and continue</button></div></div>`;
+if(x[0]==="stall")return `<div class="note"><b>Paused.</b> ${esc(x[1])}<div class="acts"><button class="btn cop">Retry with Claude Sonnet 5.5 · about $0.04</button><button class="btn">Let Nemotron try again</button><button class="btn">Edit and continue</button></div></div>`;
 if(x[0]==="check"){const dn=x[1].filter(i=>i[1]===1).length;return `<div class="checkc"><div class="hd"><span>Progress</span><span>${dn} of ${x[1].length}</span></div>`+x[1].map(i=>`<div class="ci ${["n","d","p"][i[1]]}"><span class="m">${["○","✓","✱"][i[1]]}</span>${esc(i[0])}${i[2]?`<small>${esc(i[2])}</small>`:""}</div>`).join("")+`</div>`;}
 if(x[0]==="approve")return `<div class="appr"><b>Allow ${esc(x[1])}?</b> ${esc(x[3])}<br><code>${esc(x[2])}</code><div class="acts"><button class="btn pri">Allow once</button><button class="btn">Always allow for github.com</button><button class="btn">Deny</button></div></div>`;
 if(x[0]==="sum")return `<div class="ev">${esc(x[1])} <span class="lnk">Show</span></div>`;
@@ -497,7 +497,7 @@ const sections={
 ["Triggers","Malformed tool calls ×2, same call repeated ×3, tool errors in a row ×3","Edit"],
 ["Monthly cap","Hearth asks before going past this","$10.00"],
 ["Per-project override","Benchmarks: off · Bike Buddy mount: off","Edit"]],
-"Models":[["hearth-box","llama.cpp over Tailscale · qwen3.5-9b, gemma-4-12b, qwen3-coder-30b","Online"],
+"Models":[["hearth-box","llama.cpp over Tailscale · gemma-4-12b, qwen3.6-35b-a3b, nemotron-3.5-bolt-74b","Online"],
 ["Anthropic","Key in Keychain","Connected"],["OpenAI","No key yet","Add key"],["Gemini","No key yet","Add key"],
 ["Apple Foundation Models","On-device · macOS 26 · used for titles and routing","sw",true]],
 "File locations":[["Projects folder","Each project's files and artifacts, as plain folders","~/Hearth/Projects"],
@@ -519,7 +519,7 @@ $("openSet").addEventListener("click",()=>{$("set").hidden=false;$("openSet").se
 $("closeSet").addEventListener("click",()=>{$("set").hidden=true;$("openSet").setAttribute("aria-expanded","false");});
 $("set").addEventListener("click",e=>{if(e.target.id==="set")$("closeSet").click();});
 $("snav").addEventListener("click",e=>{const b=e.target.closest(".si");if(!b)return;sec=b.dataset.k;renderSet();});
-const palItems=[["Threads",[["Rerun A1–A7 on gemma-4-12b","Benchmarks"],["Check A4 tool-call format on gemma","Idea"]]],["Files",[["gemma-vs-qwen.md","Benchmarks"]]],["Commands",[["New thread with gemma-4-12b","↩"],["Load gemma-4-12b on hearth-box",""]]]];
+const palItems=[["Threads",[["Rerun A1–A7 on gemma-4-12b","Benchmarks"],["Check A4 tool-call format on gemma","Idea"]]],["Files",[["gemma-vs-nemotron.md","Benchmarks"]]],["Commands",[["New thread with gemma-4-12b","↩"],["Load gemma-4-12b on hearth-box",""]]]];
 function renderPal(){let k=0;$("pres").innerHTML=palItems.map(g=>`<div class="pg">${esc(g[0])}</div>`+g[1].map(r=>`<div class="pr${k++===0?" sel":""}">${esc(r[0])}<small>${esc(r[1])}</small></div>`).join("")).join("");}
 function openPal(){$("pal").hidden=false;renderPal();$("pq").focus();}
 document.addEventListener("keydown",e=>{if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();openPal();}if(e.key==="Escape"){$("pal").hidden=true;}});
